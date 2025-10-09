@@ -41,6 +41,9 @@ body {
   border-radius: 5px;
   height: 15%;
   width: 90%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .calculatorKeys{
@@ -72,4 +75,3 @@ body {
 .plus, .minus, .multiply, .divide, .equals{
   background-color: grey;
 }
-
