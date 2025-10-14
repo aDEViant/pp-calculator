@@ -1,30 +1,47 @@
 const display = document.querySelector(".calculatorDisplay");
-let keys = document.querySelectorAll(".key");
+const keys = document.querySelectorAll(".key");
+const equalsTo = document.querySelector(".equals");
+const cancel = document.querySelector(".cancel"); // Cancel button
 
-const seven = document.querySelector(".seven");
-const eight = document.querySelector(".eight");
-const nine = document.querySelector(".nine");
-const plus = document.querySelector(".plus");
-const four = document.querySelector(".four");
-const five = document.querySelector(".five");
-const six = document.querySelector(".six");
-const minus = document.querySelector(".minus");
-const one = document.querySelector(".one");
-const two = document.querySelector(".two");
-const three = document.querySelector(".three");
-const multiply = document.querySelector(".multiply");
-const cancel = document.querySelector(".cancel");
-const zero = document.querySelector(".zero");
-const equals = document.querySelector(".equals");
-const divide = document.querySelector(".divide");
+keys.forEach((key) => {
+  key.addEventListener("click", () => {
+    if (key.classList.contains("equals") || key.classList.contains("cancel"))
+      return;
+    display.textContent += key.textContent;
+  });
+});
 
-// keys.forEach((e) => {
-//     e.addEventListener('click', () => {
-//         display.textContent += e.textContent;
-//     })
-// })
+equalsTo.addEventListener("click", () => {
+  operate();
+});
 
-// function splitting(){
-//     let numbers = display.textContent.split(/[+-/*]/);
-//     let operands = display.textContent.match(/[+\-/*]/g);
-// }
+cancel.addEventListener("click", () => {
+  display.textContent = "";
+});
+
+function operate() {
+  let numbers = display.textContent.split(/[+\-*/]/);
+  let operands = display.textContent.match(/[+\-*/]/g);
+
+  // Prevent error if user presses '=' with no input
+  if (!numbers[0] || !operands) return;
+
+  let result = Number(numbers[0]);
+
+  for (let i = 0; i < operands.length; i++) {
+    let nextNumber = Number(numbers[i + 1]);
+    let operator = operands[i];
+
+    if (operator === "+") {
+      result += nextNumber;
+    } else if (operator === "-") {
+      result -= nextNumber;
+    } else if (operator === "*") {
+      result *= nextNumber;
+    } else if (operator === "/") {
+      result /= nextNumber;
+    }
+  }
+
+  display.textContent = result;
+}
